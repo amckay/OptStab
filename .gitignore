@@ -1,0 +1,6 @@
+code/.ipynb_checkpoints
+code/ModelFramework/.ipynb_checkpoints
+*.pyc
+.DS_Store
+*.npz
+data/results/*.tex

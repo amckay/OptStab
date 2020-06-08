@@ -1,0 +1,2 @@
+class NaNInfError(RuntimeError):
+    pass

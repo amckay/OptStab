@@ -1,0 +1,27 @@
+set OptStab.py to import from OptStab_Baseline
+python OptStab_calibrate.py 1
+
+copy shock variances into OS_Version_1.py
+
+
+for N in [1, 2, 3, 4, 12, 13, 15 16, 22]
+./pod.submit2q N
+
+Note that unpack point for versions > 1 read search results from version 1
+
+
+
+Other cases
+FlexiblePrices:
+python OptStab_FlexiblePrices.py
+
+
+
+Results:
+OptStab_Plot.ipynb
+Unpack_Plot.ipynb
+CreateMacroStabTable.ipynb
+
+
+Savings:
+see ~/projects/OptStab/WithSaving/Code/Workflow
