@@ -1,4 +1,4 @@
-# "Optimal Automatic Stabilizers" eplication Material
+# "Optimal Automatic Stabilizers" Replication Material
 
 Codes to replicate results in "Optimal Automatic Stabilizers" by Alisdair McKay and Ricardo Reis.
 
