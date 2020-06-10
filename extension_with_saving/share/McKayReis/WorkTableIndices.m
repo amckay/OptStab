@@ -1,0 +1,12 @@
+ibeta = 1;
+ib = 2;
+iB = 3;
+iR = 4;
+ih = 5;
+ilambda = 6;
+iu = 7;
+iwage = 8;
+iMU = 9;
+istdlogy = 10;
+istdu = 11;
+iwelfareSS = 12;

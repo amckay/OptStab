@@ -1,3 +1,0 @@
-scc1:code/global % bash
-[amckay@scc1 global]$ source activate ad
-(ad)[amckay@scc1 global]$ ./submit2q

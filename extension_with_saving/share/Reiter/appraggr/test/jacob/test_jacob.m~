@@ -1,0 +1,10 @@
+*{
+
+
+
+clc; clear all;
+X = ones(2,1);
+iDeriv = 1:2;
+nmax = 1;
+
+J = adjacob(@test_equ,X,iDeriv,nmax)

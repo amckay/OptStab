@@ -1,0 +1,13 @@
+
+global Params;
+npp = 1;  % permanent productivity states; npp=1 means only i.i.d shocks
+           % npp=31 is the big calibration in the paper
+sigtau = 0.01;  % stdev tax shock
+freq = 4;  % frequency  (4 is quarterly etc.)
+initparams(npp,freq,sigtau);
+
+% COMPUTE STEADY STATE:
+[par,Kequ,D] = hetsolve;
+
+  
+
