@@ -58,6 +58,6 @@ ax = f.get_axes()[0]
 ax.set_ylim(0.65,0.9)
 AddRecBars(ax)
 
-FIGURE_DIR = os.path.join(os.path.expanduser("~"),'Scratch','OptStabFigures')
+FIGURE_DIR = os.path.join(os.path.pardir,'data','results')
 f.savefig(os.path.join(FIGURE_DIR,'cyclical_b.png'),bbox_inches = 'tight')
 plt.show()
