@@ -6,8 +6,8 @@ Codes to replicate results in "Optimal Automatic Stabilizers" by Alisdair McKay 
 
 Most computations were conducted using Python 2.7.  The extension with savings was conducted with Matlab.  To set up the Python environment using the Anaconda virtual environment manager:
 ```
-conda create -n py27 python=2.7 numpy=1.15.4 matplotlib ipykernel ad scipy jinja2 pandas fredapi statsmodels
-conda activate py27 
+conda create -n py27 python=2.7 numpy=1.15.4 matplotlib ipykernel ad  jinja2 pandas==0.20.3 fredapi scipy==0.19.1 statsmodels==0.8.0
+conda activate py27
 python -m ipykernel install --user
 ```
 
@@ -15,10 +15,23 @@ python -m ipykernel install --user
 
 In the paper, we consider several variants of the model corresponding to different parameter values and model specifications.  In the code, these versions are referenced by the variable `VERSION`, which is set by a command-line argument when the scripts are called.
 
+## Data and empirical moments
 
-## The main results
+Some of the calibration targets are empirical moments computed from data downloaded from FRED. The script
+`main_code/EmpiricalMoments.py` reads the raw data series from csv files in `data/FRED` and saves the relevant moments to
+`data/calibration/Moments.txt`.  The output file already exists in the replication package so you can skip this
+step if you are not interested.
 
-The main results in our paper are the effect of business cycles on the optimal social insurance system reported in sections 6.2 and 6.3.  These results correspond to `VERSION = 1`.
+
+## To compute all results
+
+The script `main_code/ComputeAll.sh` performs all calculations, produces figures and tables, and writes other results
+to the screen.  Running this script takes many hours primarily because it solves the model with many different
+parameter combinations to construct Table 2. Rather than running the script as it is written, you may prefer to look at the comments in the script to find the part that you are interested in.
+
+## Explanation of steps to compute the main results
+
+The main results in our paper are the effect of business cycles on the optimal social insurance system reported in sections 6.2 and 6.3.  These results correspond to `VERSION = 1`.  The steps below are executed by `ComputeAll.sh`, but we list them here to give some more explanation.
 
 First we need to find the grid on which we solve the model:
 ```
@@ -33,22 +46,12 @@ The option ```NumProc 8`` tells the program to use 8 processor cores in parallel
 ```
 python OptStab_search.py ver 1
 ```
-Finally, to see the results and generate figures 1, 2, and 3:
+To apply the results from the propositions to unpack the numerical results:
+```
+python OptStab_Unpack.py ver 1 param b mode fig
+python OptStab_Unpack.py ver 1 param tau mode fig
+```
+Finally, to see the results reported in the text and generate figures 1, 2, and 3:
 ```
 jupyter-lab Figures123.ipynb
-```
-
-## All results (excluding Figure 4)
-
-Run `ComputeAll.sh`
-
-## Extension with savings (Figure 4)
-
-```
-cd extension_with_saving/FullModel
-matlab Main.m
-cd extension_with_saving/NoSavings
-matlab Main.m
-cd extension_with_saving
-matlab PlotResults.m
 ```
