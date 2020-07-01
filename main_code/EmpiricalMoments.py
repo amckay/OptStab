@@ -18,14 +18,16 @@ START = '1960'
 END = '2014'
 WRITE_MOMENTS = False
 
+fredfile = lambda fname: pd.Series.from_csv(os.path.join(os.path.pardir,'data','FRED',fname))
+
 print 'Moments using data from {s} through {e}'.format(s = START, e = str(int(END)-1))
 
 Moments = {}
 
-Y = pd.Series.from_csv('/Users/iragm01/projects/OptStab/data/FRED/GDP.csv')
-G = pd.Series.from_csv('/Users/iragm01/projects/OptStab/data/FRED/GCE.csv')
-u = pd.Series.from_csv('/Users/iragm01/projects/OptStab/data/FRED/unrateq.csv')
-P = pd.Series.from_csv('/Users/iragm01/projects/OptStab/data/FRED/CorePCE.csv')
+Y = fredfile('GDP.csv')
+G = fredfile('GCE.csv')
+u = fredfile('unrateq.csv')
+P = fredfile('CorePCE.csv')
 
 inflation = np.log(P).diff()[START:END]
 
@@ -71,9 +73,9 @@ Moments['CovuOutputGap'] = u.cov(gdp_cycle)
 
 
 ##### Shimer calculations for the job-separation rate
-urate = pd.Series.from_csv('/Users/iragm01/projects/OptStab/data/FRED/unrate.csv')
-U = pd.Series.from_csv('/Users/iragm01/projects/OptStab/data/FRED/UNEMPLOY.csv')
-US = pd.Series.from_csv('/Users/iragm01/projects/OptStab/data/FRED/UEMPLT5.csv')
+urate = fredfile('unrate.csv')
+U = fredfile('UNEMPLOY.csv')
+US = fredfile('UEMPLT5.csv')
 
 f = -np.log((U.shift(-1)-US.shift(-1))/U)
 f.index = pd.date_range(U.index[0], periods=len(f),freq='M')
@@ -102,13 +104,10 @@ MyD = pd.DataFrame({'f':f,'s':svalues},index = index)
 MyD = 1.0 - np.exp(-12./4 * MyD)
 MyD = MyD.resample('QS')
 
-# print 'Average unemployment inflow rate = {0}'.format(MyD['s'][START:END].mean())
-# Moments['meanuInflowRate'] = MyD['s'][START:END].mean()
-
 
 # hours adjustment
-EMRatio = pd.Series.from_csv('/Users/iragm01/projects/OptStab/data/FRED/EMRATIOq.csv')
-HoursPerWorkerIndex = pd.Series.from_csv('/Users/iragm01/projects/OptStab/data/FRED/HoursPerWorkerIndex.csv')
+EMRatio = fredfile('EMRATIOq.csv')
+HoursPerWorkerIndex = fredfile('HoursPerWorkerIndex.csv')
 
 TotalHoursPerCapita = EMRatio * HoursPerWorkerIndex / 1000
 
@@ -128,29 +127,10 @@ print 'St Dev TotalHours = {0}'.format(Moments['StDevTotalHours'])
 print 'Correlation of u and hours per worker = {0}'.format(u.corr(HoursPerWorkerIndex))
 Moments['Corr_U_HoursPerWorkerIndex'] = u.corr(HoursPerWorkerIndex)
 
-# import matplotlib.pyplot as plt
-# plt.subplot(2,2,1)
-# plt.plot(EMRatio+HoursPerWorkerIndex)
-# plt.title('Total Hours')
-# plt.subplot(2,2,2)
-# plt.plot(HoursPerWorkerIndex)
-# plt.title('Per Worker')
-# plt.subplot(2,2,3)
-# plt.plot(EMRatio)
-# plt.title('E-P Ratio')
-# plt.show()
+
 
 if WRITE_MOMENTS:
     with open(os.path.join(os.pardir,'data','calibration','Moments.txt'), 'w') as outfile:
         json.dump(Moments, outfile)
 else:
     print("Moments not written to file")
-
-
-# inflow rate = (1-u)*upsilon
-# unemployment rate  = upsilon*(1-qM)
-
-# q = ??
-# u = 0.0610422322775
-# upsilon = 0.0919001812373 / (1-u)
-# M = (1 - u / upsilon) / q

@@ -52,7 +52,7 @@ def AddRecBars(ax):
 
 
 # make figure
-f = plt.figure()
+f = plt.figure(figsize=(12,8))
 plt.plot(b, color='k')
 ax = f.get_axes()[0]
 ax.set_ylim(0.65,0.9)
