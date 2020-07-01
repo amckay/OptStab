@@ -4,7 +4,7 @@ Codes to replicate results in "Optimal Automatic Stabilizers" by Alisdair McKay 
 
 ## Setting up the computing environment
 
-Most computations were conducted using Python 2.7 with .  The extension with savings was conducted with Matlab.  To set up the Python environment using the Anaconda virtual environment manager:
+Most computations were conducted using Python 2.7 with plotting in JupyterLab.  The extension with savings was conducted with Matlab.  To set up the Python environment using the Anaconda virtual environment manager:
 ```
 conda config --append channels conda-forge
 conda config --append channels terhorst
