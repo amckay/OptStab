@@ -3,6 +3,5 @@ code/ModelFramework/.ipynb_checkpoints
 *.pyc
 .DS_Store
 *.npz
-data/results/*.tex
 main_code/.ipynb_checkpoints
 main_code/ModelFramework/.ipynb_checkpoints
